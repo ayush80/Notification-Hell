@@ -52,13 +52,13 @@ export function SystemUpdateOverlay({ overlay, isTopmost }: SystemUpdateOverlayP
 
   return (
     <ModalFrame 
-      title="🔄 SYSTEM UPDATE" 
+      title="SYSTEM UPDATE" 
       variant="danger" 
       isTopmost={isTopmost}
     >
       <div style={styles.container}>
         <div style={styles.iconContainer}>
-          <span style={styles.icon}>🔄</span>
+          <span style={styles.icon}>@</span>
         </div>
         
         <h3 style={styles.title}>Critical Update Required!</h3>
@@ -93,10 +93,10 @@ export function SystemUpdateOverlay({ overlay, isTopmost }: SystemUpdateOverlayP
         </div>
 
         <p style={styles.warning}>
-          ⚠️ "Restart App" will reset your form!
+          "Restart App" will reset your form!
         </p>
         <p style={styles.warning}>
-          ⚠️ "Later" increases chaos!
+          "Later" increases chaos!
         </p>
       </div>
     </ModalFrame>

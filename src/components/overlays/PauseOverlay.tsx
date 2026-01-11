@@ -23,7 +23,7 @@ export function PauseOverlay({ overlay, isTopmost }: PauseOverlayProps) {
 
   return (
     <ModalFrame 
-      title="⏸️ PAUSED" 
+      title="PAUSED" 
       variant="default" 
       isTopmost={isTopmost}
       onClose={handleResume}

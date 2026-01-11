@@ -8,7 +8,7 @@ export function StickyNoteHint() {
       <div style={styles.note}>
         <div style={styles.tape} />
         <div style={styles.content}>
-          <span style={styles.title}>📝 REMINDER</span>
+          <span style={styles.title}>REMINDER</span>
           <span style={styles.text}>Secret Code is:</span>
           <span style={styles.code}>8BIT</span>
         </div>

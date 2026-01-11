@@ -159,7 +159,7 @@ export function FormLevel() {
     <div style={styles.container}>
       <form ref={formRef} onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.header}>
-          <h2 style={styles.title}>📋 COMPLETE THE FORM</h2>
+          <h2 style={styles.title}>COMPLETE THE FORM</h2>
           <div style={styles.progress}>
             {filledCount}/10 fields
           </div>

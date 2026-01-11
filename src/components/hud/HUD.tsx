@@ -65,7 +65,7 @@ export function HUD() {
 
       {state.focusMode.active && (
         <div style={styles.focusModeIndicator}>
-          🛡️ FOCUS MODE: {Math.ceil(state.focusMode.durationMsLeft / 1000)}s
+          FOCUS MODE: {Math.ceil(state.focusMode.durationMsLeft / 1000)}s
         </div>
       )}
     </div>

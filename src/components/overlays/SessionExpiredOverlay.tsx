@@ -44,14 +44,14 @@ export function SessionExpiredOverlay({ overlay, isTopmost }: SessionExpiredOver
 
   return (
     <ModalFrame 
-      title="🔒 SESSION EXPIRED" 
+      title="SESSION EXPIRED" 
       size="small" 
       variant="danger" 
       isTopmost={isTopmost}
     >
       <div style={styles.container}>
         <div style={styles.iconContainer}>
-          <span style={styles.icon}>🔒</span>
+          <span style={styles.icon}>X</span>
         </div>
         
         <p style={styles.message}>

@@ -21,10 +21,10 @@ export function FocusButton() {
 
   const isDisabled = active || cooldownMsLeft > 0;
   const buttonText = active 
-    ? `🛡️ ${Math.ceil(durationMsLeft / 1000)}s` 
+    ? `${Math.ceil(durationMsLeft / 1000)}s` 
     : cooldownMsLeft > 0 
-      ? `⏳ ${Math.ceil(cooldownMsLeft / 1000)}s`
-      : '🛡️ FOCUS';
+      ? `${Math.ceil(cooldownMsLeft / 1000)}s`
+      : 'FOCUS';
 
   return (
     <button

@@ -58,13 +58,13 @@ export function ChatOverlay({ overlay, isTopmost }: ChatOverlayProps) {
 
   return (
     <ModalFrame 
-      title="💬 NEW MESSAGE" 
+      title="NEW MESSAGE" 
       variant="info" 
       isTopmost={isTopmost}
     >
       <div style={styles.container}>
         <div style={styles.chatBubble}>
-          <div style={styles.avatar}>👤</div>
+          <div style={styles.avatar}>?</div>
           <div style={styles.messageBox}>
             <span style={styles.sender}>Anonymous_Hacker42</span>
             <p style={styles.messageText}>

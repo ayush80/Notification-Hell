@@ -79,7 +79,7 @@ export function AreYouSurePopup({ overlay, isTopmost }: AreYouSurePopupProps) {
 
   return (
     <ModalFrame 
-      title="❓ CONFIRM" 
+      title="CONFIRM" 
       size="small" 
       variant="warning" 
       isTopmost={isTopmost}

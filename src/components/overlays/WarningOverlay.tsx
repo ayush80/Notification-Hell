@@ -21,14 +21,14 @@ export function WarningOverlay({ overlay, isTopmost }: WarningOverlayProps) {
 
   return (
     <ModalFrame 
-      title="⚠️ SYSTEM WARNING" 
+      title="SYSTEM WARNING" 
       variant="warning" 
       isTopmost={isTopmost}
       onClose={handleDismiss}
     >
       <div style={styles.container}>
         <div style={styles.iconContainer}>
-          <span style={styles.icon}>⚠️</span>
+          <span style={styles.icon}>!</span>
         </div>
         
         <p style={styles.message}>{message}</p>

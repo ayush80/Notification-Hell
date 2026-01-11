@@ -26,9 +26,9 @@ export function MenuScreen() {
         </p>
 
         <div style={styles.instructions}>
-          <p>⚡ Fill out all 10 fields</p>
-          <p>⏰ Before time runs out</p>
-          <p>👾 Survive the interruptions</p>
+          <p>* Fill out all 10 fields</p>
+          <p>* Before time runs out</p>
+          <p>* Survive the interruptions</p>
         </div>
 
         <button

@@ -37,7 +37,7 @@ export function RateUsOverlay({ overlay, isTopmost }: RateUsOverlayProps) {
 
   return (
     <ModalFrame 
-      title="⭐ RATE OUR APP!" 
+      title="RATE OUR APP!" 
       variant="info" 
       isTopmost={isTopmost}
     >
@@ -80,7 +80,7 @@ export function RateUsOverlay({ overlay, isTopmost }: RateUsOverlayProps) {
         </button>
 
         <p style={styles.escapeNote} onClick={handleEscapeAttempt}>
-          ⚠️ You can't escape feedback!
+          You can't escape feedback!
         </p>
       </div>
     </ModalFrame>
