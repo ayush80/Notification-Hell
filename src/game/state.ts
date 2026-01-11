@@ -23,7 +23,8 @@ export type OverlayType =
   | 'SYSTEM_UPDATE'
   | 'SESSION_EXPIRED'
   | 'PAUSE'
-  | 'GLITCH';
+  | 'GLITCH'
+  | 'NICE_TRY';
 
 export interface OverlayInstance {
   id: string;

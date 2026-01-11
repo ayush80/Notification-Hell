@@ -13,6 +13,7 @@ import { SystemUpdateOverlay } from './SystemUpdateOverlay';
 import { SessionExpiredOverlay } from './SessionExpiredOverlay';
 import { PauseOverlay } from './PauseOverlay';
 import { GlitchFlash } from './GlitchFlash';
+import { NiceTryOverlay } from './NiceTryOverlay';
 
 function OverlayRenderer({ overlay, isTopmost }: { overlay: OverlayInstance; isTopmost: boolean }) {
   switch (overlay.type) {
@@ -32,6 +33,8 @@ function OverlayRenderer({ overlay, isTopmost }: { overlay: OverlayInstance; isT
       return <PauseOverlay overlay={overlay} isTopmost={isTopmost} />;
     case 'GLITCH':
       return <GlitchFlash overlay={overlay} />;
+    case 'NICE_TRY':
+      return <NiceTryOverlay overlay={overlay} isTopmost={isTopmost} />;
     default:
       return null;
   }

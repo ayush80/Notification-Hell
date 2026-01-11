@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { useGame } from '../GameRoot';
 import { FieldId, OverlayInstance } from '@/game/state';
 import { createRng } from '@/game/rng';
 import { generateId } from '@/game/utils';
-import { playSuccessBeep, YES_IS_CORRECT_PROMPTS } from '@/game/engine';
+import { playSuccessBeep, playErrorBeep } from '@/game/engine';
 
 const STATES = ['CA', 'NY', 'TX', 'IL', 'WA'];
 const COLORS = ['Red', 'Blue', 'Green', 'Purple'];
@@ -32,9 +32,105 @@ const SUBMIT_PROMPTS = [
   { message: 'Ready to submit?', yesLabel: 'READY', noLabel: 'NOT YET' },
 ];
 
+// Snarky messages for autofill detection
+const SNARKY_MESSAGES = [
+  "Did you really think autofill would save you?",
+  "Autofill detected! That's not how we play here.",
+  "Browser autofill? In MY form? Unacceptable!",
+  "We don't do shortcuts around here, buddy.",
+  "Autofill is for QUITTERS. Type it yourself!",
+  "Your browser tried to help. We said NO.",
+  "Caught you! Manual entry only, please.",
+  "The form demands GENUINE keystrokes.",
+  "Autofill? More like AUTO-FAIL!",
+  "Your laziness has been noted and penalized.",
+];
+
+// Map field IDs to friendly names
+const FIELD_NAMES: Record<FieldId, string> = {
+  fullName: 'Full Name',
+  email: 'Email',
+  phone: 'Phone',
+  address: 'Address',
+  city: 'City',
+  state: 'State',
+  zip: 'ZIP Code',
+  favoriteColor: 'Favorite Color',
+  secretCode: 'Secret Code',
+  terms: 'Terms',
+};
+
 export function FormLevel() {
   const { state, dispatch } = useGame();
   const formRef = useRef<HTMLFormElement>(null);
+  const lastAutofillTimeRef = useRef<number>(0);
+
+  // Autofill detection via animation
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form) return;
+
+    const handleAnimationStart = (e: AnimationEvent) => {
+      if (e.animationName === 'onAutoFillStart') {
+        const now = Date.now();
+        
+        // Debounce - don't trigger if we just triggered (within 500ms)
+        // This prevents multiple fields from triggering at once during bulk autofill
+        if (now - lastAutofillTimeRef.current < 500) return;
+        lastAutofillTimeRef.current = now;
+
+        const input = e.target as HTMLInputElement;
+        const fieldName = input.name || input.id || 'unknown';
+
+        // Find the field ID from the input
+        const fieldId = FIELD_CONFIG.find(f => 
+          input.placeholder === f.placeholder || 
+          input.name === f.id
+        )?.id;
+
+        const friendlyName = fieldId ? FIELD_NAMES[fieldId] : fieldName;
+        
+        // Pick a random snarky message
+        const message = SNARKY_MESSAGES[Math.floor(Math.random() * SNARKY_MESSAGES.length)];
+
+        // Apply penalty
+        playErrorBeep(state.settings.mute);
+        dispatch({ type: 'ADD_SCORE', amount: -100 });
+        dispatch({ type: 'ADJUST_CHAOS', amount: 15 });
+
+        // Show the "Nice try!" overlay
+        const overlay: OverlayInstance = {
+          id: generateId(),
+          type: 'NICE_TRY',
+          createdAtMs: Date.now(),
+          size: 'small',
+          blocking: true,
+          critical: false,
+          canEscClose: true,
+          payload: { 
+            fieldName: friendlyName,
+            message,
+          },
+        };
+        dispatch({ type: 'PUSH_OVERLAY', overlay });
+
+        // Clear ALL autofilled values to force manual entry
+        FIELD_CONFIG.forEach(f => {
+          if (f.type !== 'checkbox' && f.type !== 'select') {
+            const currentVal = state.form.values[f.id];
+            if (typeof currentVal === 'string' && currentVal.length > 0) {
+              dispatch({ type: 'UPDATE_FIELD', field: f.id, value: '' });
+            }
+          }
+        });
+      }
+    };
+
+    form.addEventListener('animationstart', handleAnimationStart as EventListener);
+    return () => {
+      form.removeEventListener('animationstart', handleAnimationStart as EventListener);
+    };
+  }, [dispatch, state.settings.mute, state.form.values]);
 
   const handleChange = useCallback((field: FieldId, value: string | boolean) => {
     dispatch({ type: 'UPDATE_FIELD', field, value });
@@ -139,6 +235,8 @@ export function FormLevel() {
         <label className="form-label">{label}</label>
         <input
           type={type}
+          name={id}
+          autoComplete="off"
           className={`pixel-input ${touched && error ? 'invalid' : touched && !error ? 'valid' : ''}`}
           value={value as string}
           placeholder={placeholder}
