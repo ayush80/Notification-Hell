@@ -139,7 +139,7 @@ export function GameRoot() {
                 position: 'relative',
                 overflow: 'auto',
               }}
-              {...(hasBlockingOverlay ? { inert: '' } : {})}
+              {...(hasBlockingOverlay ? { inert: true } : {})}
             >
               <FormLevel />
               <StickyNoteHint />
